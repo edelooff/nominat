@@ -21,7 +21,7 @@ setup(
         "Programming Language :: Python"],
     packages=find_packages(),
     include_package_data=True,
-    zip_safe=True,
+    zip_safe=False,
     tests_require=[
         'pytest']
 )
