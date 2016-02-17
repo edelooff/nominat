@@ -5,7 +5,7 @@ Nominat is a Python library that renames identifiers (variable names, class name
 
 To allow the anonymized names to still make some sense in relation to each other, once a replacement for a word has been chosen, it will consistently be reused. In addition, `nominat` is case-insensitive but also case-preserving. This looks like this:
 
-.. code-block::
+.. code-block:: python
 
     >>> nom = nominat.nominator()
     >>> nom('pet_names')
