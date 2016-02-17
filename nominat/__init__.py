@@ -3,8 +3,8 @@ import os
 import random
 import re
 
-SPLIT_UNDERSCORE = r'[^_]+'
-SPLIT_CASE = r'(^[a-z]+|[A-Z]+(?![a-z])|[A-Z][a-z]+)'
+SPLIT_UNDERSCORE = re.compile(r'[^_]+')
+SPLIT_CASED_WORDS = re.compile(r'(^[a-z]+|[A-Z]+(?![a-z])|[A-Z][a-z]+)')
 
 
 class Nominator(object):
@@ -28,7 +28,7 @@ class Nominator(object):
         replaces each individual word. The case style for each replaced word
         is kept the same as the original.
         """
-        return re.sub(SPLIT_UNDERSCORE, self._process_cased_words, word)
+        return SPLIT_UNDERSCORE.sub(self._process_cased_words, word)
 
     def replace_single(self, word):
         """Returns the replaced word in the same case style.
@@ -75,7 +75,7 @@ def read_words(source):
 
 def split_replace_by_case(word):
     """Yields chunks of word that are separated by case usage."""
-    for match in re.finditer(SPLIT_CASE, word):
+    for match in SPLIT_CASED_WORDS.finditer(word):
         yield match.group(0)
 
 
