@@ -9,6 +9,10 @@ SPLIT_CASE = r'(^[a-z]+|[A-Z]+(?![a-z])|[A-Z][a-z]+)'
 
 class Nominator(object):
     def __init__(self, replacements, no_replace=None):
+        """Initializes Nominator based on a replacements list.
+
+        Also accepts an iterable of words not to replace as `no_replace`.
+        """
         self.cache = {}
         self.replacements = list(read_words(replacements))
         self._no_replace = set(read_words(no_replace or []))
@@ -20,14 +24,17 @@ class Nominator(object):
     def replace_combined(self, word):
         """Returns a string with each sub-word replaced.
 
-        Splits a variable name on underscores and case differences and replaces
-        each individual word yielded."""
+        Splits a variable name on underscores and case differences and then
+        replaces each individual word. The case style for each replaced word
+        is kept the same as the original.
+        """
         return re.sub(SPLIT_UNDERSCORE, self._process_cased_words, word)
 
     def replace_single(self, word):
         """Returns the replaced word in the same case style.
 
-        Correctly words for words in lower, upper and title case.
+        Expects words to be of a detectable case: `lower`, `upper` or `title`.
+        If a mixed case-style word is provided, a ValueError is raised instead.
         """
         if word.islower():
             return self._replace(word)
@@ -58,7 +65,7 @@ class Nominator(object):
 
 
 def read_words(source):
-    """Read words from a file, list of other iterable."""
+    """Read words from a file, list or other iterable."""
     for line in source:
         for word in line.split():
             word = word.strip()
