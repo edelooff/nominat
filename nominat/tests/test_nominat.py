@@ -120,6 +120,4 @@ def test_words_from_iterables():
 
     # Create word list from a set
     set_based = nominat.Nominator(set(words))
-    assert len(set_based.replacements) == len(expected)
-    for word in expected:
-        assert word in set_based.replacements
+    assert sorted(set_based.replacements) == sorted(expected)
