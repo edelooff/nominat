@@ -10,7 +10,7 @@ README = open(os.path.join(HERE, 'README.rst')).read()
 
 setup(
     name='nominat',
-    version='0.1',
+    version='0.2',
     author='Elmer de Looff',
     author_email='elmer.delooff@gmail.com',
     description='Case-insensitive case-preserving variable name mangler',

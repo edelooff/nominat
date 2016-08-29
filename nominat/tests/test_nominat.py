@@ -79,6 +79,18 @@ def test_mixed_case_underscore(chicken, spam):
     assert chicken('some_PascalCase_and_camelCase') == chicken_result
 
 
+def test_replace_numerals(chicken, empty):
+    """Numbers are also replaced, with lowercase replacement words."""
+    assert chicken('Summer69') == 'Chickenchicken'
+    empty.cache.update({'version': 'plane', '3': 'fan'})
+    assert empty('VERSION_3') == 'PLANE_fan'
+
+
+def test_word_boundaries(chicken):
+    """Everything that is not text to be replaced is preserved."""
+    expected = 'Chicken (chicken) chicken:chicken'
+    assert chicken('This (super) neat:thing') == expected
+
 def test_no_replace(chicken, spam):
     """Test that provided 'safe' words are not replaced."""
     assert chicken('table_id') == 'chicken_id'
