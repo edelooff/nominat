@@ -86,6 +86,11 @@ def test_replace_numerals(chicken, empty):
     assert empty('VERSION_3') == 'PLANE_fan'
 
 
+def test_word_boundaries(chicken):
+    """Everything that is not text to be replaced is preserved."""
+    expected = 'Chicken (chicken) chicken:chicken'
+    assert chicken('This (super) neat:thing') == expected
+
 def test_no_replace(chicken, spam):
     """Test that provided 'safe' words are not replaced."""
     assert chicken('table_id') == 'chicken_id'
