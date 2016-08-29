@@ -4,7 +4,7 @@ import random
 import re
 
 SPLIT_UNDERSCORE = re.compile(r'[^_]+')
-SPLIT_CASED_WORDS = re.compile(r'(^[a-z]+|[A-Z]+(?![a-z])|[A-Z][a-z]+)')
+SPLIT_CASED_WORDS = re.compile(r'(^[a-z]+|[A-Z]+(?![a-z])|[A-Z][a-z]+|[0-9]+)')
 
 
 class Nominator(object):
@@ -36,13 +36,13 @@ class Nominator(object):
         Expects words to be of a detectable case: `lower`, `upper` or `title`.
         If a mixed case-style word is provided, a ValueError is raised instead.
         """
-        if word.islower():
+        if word.islower() or word.isdigit():
             return self._replace(word)
         elif word.isupper():
             return self._replace(word.lower()).upper()
         elif word.istitle():
             return self._replace(word.lower()).title()
-        raise ValueError('Unexpected word casing.')
+        raise ValueError('Unable to detect/reproduce case of %r.' % word)
 
     def _process_cased_words(self, match):
         """Replace the words within a single phrase portion."""
